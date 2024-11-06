@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .search-form {
+            margin: 0 auto;
+            display: flex;
+        }
+        .search-form input {
+            margin-right: 5px; /* Adjust this value to control spacing */
+        }
+    </style>
+    <title>
+        {% block title  %}
+        Tweeter
+        {% endblock %}
+    </title>
+</head>
+<body class="bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'display_tweet' %}">Tweet</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'display_tweet' %}">Home</a>
+                    </li>
+                </ul>
+                <form class="d-flex search-form">
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
+                    
+                
+                    {% if user.is_authenticated %}
+
+                        <form action="{% url 'logout'%}" method="post">
+                            {% csrf_token %}
+                            <li class="nav-item">
+                        
+                                <a class="nav-link" href="#">Profile</a>
+                                
+                            </li>
+                            <button class="btn btn-danger">Logout</button>
+
+                        </form>
+                        {% else %}
+                        <a href="{% url 'register'%}"> <button class="btn btn-success mx-3">  Register</button></a>
+                        <a href="{% url 'login'%}"> <button class="btn btn-primary">  Login</button></a>
+                       
+
+                        {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <div class="container" style="padding-top:15px;">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

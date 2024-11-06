@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block content %}
+
+<h1 class="text-center text-white mt-4">Welcome to Tweeter clone </h1>
+
+<h2 class="text-white">
+    {% if form.instance.pk %}
+    Edit Tweet
+    {% else  %} Create New Tweet
+    {% endif %}
+    <form enctype="multipart/form-data" method="post" class="form">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button class="btn btn-warning">Submit</button>
+    </form>
+<a href="{% url "display_tweet" %}">Back</a>
+</h2>
+{% endblock %}
