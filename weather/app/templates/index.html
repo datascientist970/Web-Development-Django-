@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f4f7;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 70%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .weather-info {
+            margin-top: 20px;
+        }
+
+        .weather-info p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        .weather-info img {
+            width: 80px;
+            height: 80px;
+        }
+
+        .temperature {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .rain-info {
+            font-size: 18px;
+            margin-top: 10px;
+            color: #777;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Weather Information</h1>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="text" name="city" id="city" placeholder="Enter City Name">
+                <button type="submit">Get Weather</button>
+            </div>
+        </form>
+        
+        <div class="weather-info">
+            <h3 class="temperature">{{ Temp|floatformat:1 }}&deg;C</h3>
+            <h3>{{ City }}</h3>
+            <p class="rain-info">{{ Rain }}</p>
+            <p>{{ Description }}</p>
+            <p>
+                <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="Weather Icon">
+            </p>
+            <h3>{{ Day }}</h3>
+        </div>
+
+        
+    </div>
+
+</body>
+</html>
