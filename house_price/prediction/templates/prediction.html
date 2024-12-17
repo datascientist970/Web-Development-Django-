@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    <!-- Link to Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Add custom CSS -->
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input[type="number"], 
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        h2 {
+            text-align: center;
+            color: #28a745;
+            margin-top: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>House Price Prediction</h1>
+        <form method="POST" action="/">
+            {% csrf_token %}
+            <label for="bedrooms">Number of Bedrooms:</label>
+            <input type="number" name="bedrooms" required>
+
+            <label for="space">Space (sq ft):</label>
+            <input type="text" name="space" required>
+
+            <label for="room">Number of Rooms:</label>
+            <input type="number" name="room" required>
+
+            <label for="Lot">Lot Size:</label>
+            <input type="number" name="Lot" required>
+
+            <label for="Tax">Tax:</label>
+            <input type="number" name="Tax" required>
+
+            <label for="bathroom">Number of Bathrooms:</label>
+            <input type="number" name="bathroom" required>
+
+            <label for="garage">Garage Size:</label>
+            <input type="number" name="garage" required>
+
+            <label for="cond">Condition (0 or 1):</label>
+            <input type="number" name="cond" required placeholder="e.g., 0 for poor, 1 for good">
+
+            <button type="submit">Predict Price</button>
+        </form>
+
+        {% if predicted_price %}
+            <h2>Predicted Price: ${{ predicted_price|floatformat:2 }}</h2>
+        {% endif %}
+
+        <div class="footer">
+            <p>&copy; 2024 House Price Predictor. All Rights Reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
