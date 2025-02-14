@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card mt-5">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Post a Job</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Job Title</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Job Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="location" name="location" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="salary" class="form-label">Salary</label>
+                        <input type="number" class="form-control" id="salary" name="salary" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <input type="text" class="form-control" id="category" name="category" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Job Image (Optional)</label>
+                        <input type="file" class="form-control" id="image" name="image">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Post Job</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if job.image %}
+    <div class="job-image mt-3">
+        <h5>Job Image</h5>
+        <img src="{{ job.image.url }}" alt="{{ job.title }}" class="img-fluid">
+    </div>
+{% endif %}
+{% endblock %}

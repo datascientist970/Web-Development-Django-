@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Filters</h5>
+            </div>
+            <div class="card-body">
+                <form method="get" class="row">
+                    <div class="col-md-3 mb-3">
+                        <label for="query" class="form-label">Job Title</label>
+                        <input type="text" class="form-control" id="query" name="query" value="{{ request.GET.query }}">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="location" name="location" value="{{ request.GET.location }}">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="salary" class="form-label">Minimum Salary</label>
+                        <input type="number" class="form-control" id="salary" name="salary" value="{{ request.GET.salary }}">
+                    </div>
+                    <div class="col-md-3 mb-3 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if request.user.is_authenticated and request.user.employer %}
+    <!-- Employers get redirected to their dashboard -->
+    <script>
+        window.location.href = "{% url 'employer_dashboard' %}";
+    </script>
+{% else %}
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="mb-4">Job Listings</h2>
+        {% for job in jobs %}
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    {% if job.image %}
+                        <img src="{{ job.image.url }}" class="img-fluid rounded-start" alt="{{ job.title }}">
+                    {% else %}
+                        <img src="default-image-url.jpg" class="img-fluid rounded-start" alt="Default Image">
+                    {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ job.title }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ job.employer.company_name }}</h6>
+                        <p class="card-text">{{ job.description }}</p>
+                        <p class="card-text"><strong>Location:</strong> {{ job.location }}</p>
+                        <p class="card-text"><strong>Salary:</strong> ${{ job.salary }}</p>
+                        {% if not request.user.is_authenticated or not request.user.employer %}
+                            <a href="{% url 'apply_for_job' job.id %}" class="btn btn-primary">Apply Now</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No jobs found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}
